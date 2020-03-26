@@ -2,7 +2,7 @@
 Hobby operating system in C.
 
 ## Currently supports:
-  paging
+  - paging
   
   - interrupts
   
