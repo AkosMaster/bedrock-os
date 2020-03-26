@@ -1,11 +1,15 @@
 # bedrock-os
 Hobby operating system in C.
 
-Currently supports:
+## Currently supports:
   paging
+  
   interrupts
+  
   ata/atapi driver
   
-Coming soon:
+## Coming soon:
   ext2 filesystem
+  
   userspace
+  
