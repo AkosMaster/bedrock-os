@@ -4,12 +4,12 @@ Hobby operating system in C.
 ## Currently supports:
   paging
   
-  interrupts
+  - interrupts
   
-  ata/atapi driver
+  - ata/atapi driver
   
 ## Coming soon:
-  ext2 filesystem
+  - ext2 filesystem
   
-  userspace
+  - userspace
   
