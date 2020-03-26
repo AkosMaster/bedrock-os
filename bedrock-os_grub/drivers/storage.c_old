@@ -1,0 +1,99 @@
+#include "storage.h"
+#include "screen.h"
+#include "ATA.h"
+#include "../cpu/timer.h"
+
+int vdID = 0; // virtual device id counter
+
+char ata_buff[512];
+char atapi_buff[512*4];
+
+void IDE_init() {
+    kprint("\\ IDE driver init\n");
+
+    ide_initialize(0x1F0, 0x3F6, 0x170, 0x376, 0x000);
+
+    int drive_num;
+    for (drive_num = 0; drive_num < 4; drive_num++) {
+	if (ide_devices[drive_num].Reserved != 0) {
+	    int sector_size = ide_devices[drive_num].Type == 0 ? 512 : 2048;
+	    vdevices[vdID] = (struct device_info){.type=ide_devices[drive_num].Type, .ata_id=drive_num, .sector_size=sector_size};
+	    vdID++;
+        }
+    }
+
+    kprint("\\ IDE driver setup complete\n");
+}
+
+char empty_buffer[512*4]
+char read_write_buffer[512*4]; // buffer used in read/write operations
+
+int read_sectors(struct device_info device, int sector, int count, uint8_t* buffer) {
+    if (device.type < 2) { //ATA / ATAPI
+    	uint32_t addr = (uint32_t)buffer;
+    	uint32_t es = 0;
+    	return ide_read_sectors(device.ata_id, count, sector, es, addr);
+    }
+    return 1;
+}
+
+int write_sectors(struct device_info device, int sector, int count, uint8_t* buffer) {
+    if (device.type < 2) { //ATA / ATAPI
+    	uint32_t addr = (uint32_t)buffer;
+    	uint32_t es = 0;
+    	return ide_write_sectors(device.ata_id, count, sector, es, addr);
+    }
+    return 1;
+}
+
+void test_read_access(struct device_info device) {
+    kprint("    read access: ");
+
+    if (device.type == 0) { //ATA
+        if (read_sectors(device, 0,1, ata_buff) == 0) {
+	        kprint("[ OK ]\n");
+        }
+    }
+    else if (device.type == 1) { //ATAPI
+        if (read_sectors(device, 0,1, atapi_buff) == 0) {
+	        kprint("[ OK ]\n");
+        }
+    }
+    else {
+	kprint("[ NONE ]");
+    }
+}
+
+void storage_driver_init() {
+
+    IDE_init();
+
+    /* print info */
+    kprint("\\ ");
+    kprint_int(vdID);
+    kprint(" recognized storage devices:\n");
+    for (int c = 0; c < vdID; c++) {
+	kprint("    vdID: ");
+	kprint_int(c);
+	kprint(" {");
+
+	struct device_info device = vdevices[c];
+
+        kprint(".type=");
+	if (device.type == 0) {
+	    kprint("ATA");
+        } else if (device.type == 1) {
+	    kprint("ATAPI");
+	} else {
+	    kprint("Unknown");
+	}
+
+	kprint(", .sector_size=");
+	kprint_int(device.sector_size);
+
+	kprint("}\n");
+
+	test_read_access(device);
+    }
+
+}

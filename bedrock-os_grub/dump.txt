@@ -1,0 +1,282 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          52428 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         4
+  Size of section headers:           40 (bytes)
+  Number of section headers:         16
+  Section header string table index: 13
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        c0001000 002000 003608 00  AX  0   0 16
+  [ 2] .data             PROGBITS        c0004620 005620 0001a0 00  WA  0   0 32
+  [ 3] .rodata           PROGBITS        c0050000 006000 000699 00   A  0   0 32
+  [ 4] .eh_frame         PROGBITS        c005069c 00669c 000ac0 00   A  0   0  4
+  [ 5] .bss              NOBITS          c0052000 008000 0073ec 00  WA  0   0 4096
+  [ 6] .kernel_entry     PROGBITS        00000000 001000 0000bc 00   A  0   0  4
+  [ 7] .debug_info       PROGBITS        00000000 00715c 002d5b 00      0   0  1
+  [ 8] .debug_abbrev     PROGBITS        00000000 009eb7 000ff4 00      0   0  1
+  [ 9] .debug_aranges    PROGBITS        00000000 00aeab 0001e0 00      0   0  1
+  [10] .debug_line       PROGBITS        00000000 00b08b 0010ec 00      0   0  1
+  [11] .debug_str        PROGBITS        00000000 00c177 000aad 01  MS  0   0  1
+  [12] .comment          PROGBITS        00000000 00cc24 000011 01  MS  0   0  1
+  [13] .shstrtab         STRTAB          00000000 00cc35 000095 00      0   0  1
+  [14] .symtab           SYMTAB          00000000 00cf4c 000d40 10     15  64  4
+  [15] .strtab           STRTAB          00000000 00dc8c 000860 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+There are no section groups in this file.
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  LOAD           0x001000 0x00000000 0x00000000 0x000bc 0x000bc R   0x1000
+  LOAD           0x002000 0xc0001000 0x00001000 0x037c0 0x037c0 RWE 0x1000
+  LOAD           0x006000 0xc0050000 0x00050000 0x0115c 0x0115c R   0x1000
+  LOAD           0x008000 0xc0052000 0x00052000 0x00000 0x073ec RW  0x1000
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .kernel_entry 
+   01     .text .data 
+   02     .rodata .eh_frame 
+   03     .bss 
+
+There is no dynamic section in this file.
+
+There are no relocations in this file.
+
+The decoding of unwind sections for machine type Intel 80386 is not currently supported.
+
+Symbol table '.symtab' contains 212 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: c0001000     0 SECTION LOCAL  DEFAULT    1 
+     2: c0004620     0 SECTION LOCAL  DEFAULT    2 
+     3: c0050000     0 SECTION LOCAL  DEFAULT    3 
+     4: c005069c     0 SECTION LOCAL  DEFAULT    4 
+     5: c0052000     0 SECTION LOCAL  DEFAULT    5 
+     6: 00000000     0 SECTION LOCAL  DEFAULT    6 
+     7: 00000000     0 SECTION LOCAL  DEFAULT    7 
+     8: 00000000     0 SECTION LOCAL  DEFAULT    8 
+     9: 00000000     0 SECTION LOCAL  DEFAULT    9 
+    10: 00000000     0 SECTION LOCAL  DEFAULT   10 
+    11: 00000000     0 SECTION LOCAL  DEFAULT   11 
+    12: 00000000     0 SECTION LOCAL  DEFAULT   12 
+    13: 00000000     0 FILE    LOCAL  DEFAULT  ABS vm.c
+    14: 00000000     0 FILE    LOCAL  DEFAULT  ABS kmalloc.c
+    15: 00000000     0 FILE    LOCAL  DEFAULT  ABS ring3.c
+    16: c0001315     0 NOTYPE  LOCAL  DEFAULT    1 _jump_usermode
+    17: 00000000     0 FILE    LOCAL  DEFAULT  ABS kernel.c
+    18: 00000000     0 FILE    LOCAL  DEFAULT  ABS cpu/interrupt.asm
+    19: c0001a20     0 NOTYPE  LOCAL  DEFAULT    1 isr_common_stub
+    20: c0001a47     0 NOTYPE  LOCAL  DEFAULT    1 irq_common_stub
+    21: 00000000     0 FILE    LOCAL  DEFAULT  ABS screen.c
+    22: 00000000     0 FILE    LOCAL  DEFAULT  ABS keyboard.c
+    23: c0054140   256 OBJECT  LOCAL  DEFAULT    5 key_buffer
+    24: c0002130   170 FUNC    LOCAL  DEFAULT    1 keyboard_callback
+    25: 00000000     0 FILE    LOCAL  DEFAULT  ABS ATA.c
+    26: c0054a40     1 OBJECT  LOCAL  DEFAULT    5 ide_irq_invoked
+    27: c0004728    12 OBJECT  LOCAL  DEFAULT    2 atapi_packet
+    28: 00000000     0 FILE    LOCAL  DEFAULT  ABS storage.c
+    29: 00000000     0 FILE    LOCAL  DEFAULT  ABS isr.c
+    30: 00000000     0 FILE    LOCAL  DEFAULT  ABS ports.c
+    31: 00000000     0 FILE    LOCAL  DEFAULT  ABS idt.c
+    32: 00000000     0 FILE    LOCAL  DEFAULT  ABS timer.c
+    33: c0004266    16 FUNC    LOCAL  DEFAULT    1 timer_callback
+    34: 00000000     0 FILE    LOCAL  DEFAULT  ABS gdt.c
+    35: 00000000     0 FILE    LOCAL  DEFAULT  ABS mem.c
+    36: 00000000     0 FILE    LOCAL  DEFAULT  ABS string.c
+    37: 00000000     0 FILE    LOCAL  DEFAULT  ABS boot/kernel_entry.asm
+    38: 00010000     0 NOTYPE  LOCAL  DEFAULT  ABS k_free_mem_addr
+    39: 00001000     0 NOTYPE  LOCAL  DEFAULT  ABS block_size
+    40: 00000020     0 NOTYPE  LOCAL  DEFAULT    6 gdt_start
+    41: 00000028     0 NOTYPE  LOCAL  DEFAULT    6 gdt_code
+    42: 00000030     0 NOTYPE  LOCAL  DEFAULT    6 gdt_data
+    43: 00000038     0 NOTYPE  LOCAL  DEFAULT    6 gdt_end
+    44: 00000038     0 NOTYPE  LOCAL  DEFAULT    6 gdt_descriptor
+    45: 0000003a     0 NOTYPE  LOCAL  DEFAULT    6 gdt_address
+    46: 00000008     0 NOTYPE  LOCAL  DEFAULT  ABS CODE_SEG
+    47: 00000010     0 NOTYPE  LOCAL  DEFAULT  ABS DATA_SEG
+    48: 0000003e     0 NOTYPE  LOCAL  DEFAULT    6 enable_VM
+    49: 00000003     0 NOTYPE  LOCAL  DEFAULT  ABS VM_FLAGS_SUPERVISOR
+    50: 00000007     0 NOTYPE  LOCAL  DEFAULT  ABS VM_FLAGS_USER
+    51: 00080000     0 NOTYPE  LOCAL  DEFAULT  ABS PAGE_DIR_ADDRESS
+    52: 00081000     0 NOTYPE  LOCAL  DEFAULT  ABS PAGE_TABLE_ADDRESS
+    53: 0000005c     0 NOTYPE  LOCAL  DEFAULT    6 identity_map_first_mb
+    54: 0000006e     0 NOTYPE  LOCAL  DEFAULT    6 identity_map_first_mb.loo
+    55: 00000084     0 NOTYPE  LOCAL  DEFAULT    6 register_1mb_page_table
+    56: 0000009a     0 NOTYPE  LOCAL  DEFAULT    6 reload_segments
+    57: 000000a1     0 NOTYPE  LOCAL  DEFAULT    6 reload_segments.reload_CS
+    58: 00000001     0 NOTYPE  LOCAL  DEFAULT  ABS MBALIGN
+    59: 00000002     0 NOTYPE  LOCAL  DEFAULT  ABS MEMINFO
+    60: 00000003     0 NOTYPE  LOCAL  DEFAULT  ABS FLAGS
+    61: 1badb002     0 NOTYPE  LOCAL  DEFAULT  ABS MAGIC
+    62: e4524ffb     0 NOTYPE  LOCAL  DEFAULT  ABS CHECKSUM
+    63: 00000000     0 FILE    LOCAL  DEFAULT  ABS 
+    64: c000372d   122 FUNC    GLOBAL DEFAULT    1 storage_driver_init
+    65: c0054a60   256 OBJECT  GLOBAL DEFAULT    5 ide_devices
+    66: c000411a    70 FUNC    GLOBAL DEFAULT    1 port_long_ins
+    67: c0001076   261 FUNC    GLOBAL DEFAULT    1 map_page
+    68: c00032d0    22 FUNC    GLOBAL DEFAULT    1 ide_wait_irq
+    69: c000117b    15 FUNC    GLOBAL DEFAULT    1 kernel_to_phys_addr
+    70: c0003fd7    28 FUNC    GLOBAL DEFAULT    1 register_interrupt_handle
+    71: c00028ab  1245 FUNC    GLOBAL DEFAULT    1 ide_initialize
+    72: c0054240  2048 OBJECT  GLOBAL DEFAULT    5 ide_buf
+    73: c00011a4    12 FUNC    GLOBAL DEFAULT    1 load_page_directory
+    74: c0001a86     0 NOTYPE  GLOBAL DEFAULT    1 isr4
+    75: c0001b3d     0 NOTYPE  GLOBAL DEFAULT    1 isr27
+    76: c0001ac3     0 NOTYPE  GLOBAL DEFAULT    1 isr13
+    77: c0001dec   432 FUNC    GLOBAL DEFAULT    1 print_char
+    78: c00044c7    98 FUNC    GLOBAL DEFAULT    1 reverse
+    79: c0001cca    69 FUNC    GLOBAL DEFAULT    1 kprint_hex
+    80: c0002648   611 FUNC    GLOBAL DEFAULT    1 ide_print_error
+    81: c0001bfa   182 FUNC    GLOBAL DEFAULT    1 kprint_at
+    82: c000130b     7 FUNC    GLOBAL DEFAULT    1 userland_entry
+    83: c0001bd6     0 NOTYPE  GLOBAL DEFAULT    1 irq12
+    84: c0001b10     0 NOTYPE  GLOBAL DEFAULT    1 isr22
+    85: c0004104    22 FUNC    GLOBAL DEFAULT    1 port_long_out
+    86: c0001ad1     0 NOTYPE  GLOBAL DEFAULT    1 isr15
+    87: c0001bc4     0 NOTYPE  GLOBAL DEFAULT    1 irq10
+    88: c0001be8     0 NOTYPE  GLOBAL DEFAULT    1 irq14
+    89: c000220a   302 FUNC    GLOBAL DEFAULT    1 ide_read
+    90: c0001aa5     0 NOTYPE  GLOBAL DEFAULT    1 isr9
+    91: c0001bb2     0 NOTYPE  GLOBAL DEFAULT    1 irq8
+    92: c000363f   238 FUNC    GLOBAL DEFAULT    1 ide_write_sectors
+    93: c0001b19     0 NOTYPE  GLOBAL DEFAULT    1 isr23
+    94: c0001234    57 FUNC    GLOBAL DEFAULT    1 kfree
+    95: c00041f4    32 FUNC    GLOBAL DEFAULT    1 set_idt
+    96: c0001b4f     0 NOTYPE  GLOBAL DEFAULT    1 isr29
+    97: c00042e2    10 FUNC    GLOBAL DEFAULT    1 load_gdtr
+    98: c00037a7    70 FUNC    GLOBAL DEFAULT    1 read_sectors
+    99: c0054000    48 OBJECT  GLOBAL DEFAULT    5 gdt
+   100: c0004214    82 FUNC    GLOBAL DEFAULT    1 sleep
+   101: c0001b61     0 NOTYPE  GLOBAL DEFAULT    1 isr31
+   102: c0002471   324 FUNC    GLOBAL DEFAULT    1 ide_read_buffer
+   103: c0001ffc   108 FUNC    GLOBAL DEFAULT    1 set_cursor_offset
+   104: c0004160    66 FUNC    GLOBAL DEFAULT    1 port_long_outs
+   105: c0004276   108 FUNC    GLOBAL DEFAULT    1 init_timer
+   106: c0001b07     0 NOTYPE  GLOBAL DEFAULT    1 isr21
+   107: c0003561   222 FUNC    GLOBAL DEFAULT    1 ide_read_sectors
+   108: c0004620    12 OBJECT  GLOBAL DEFAULT    2 exit_messages
+   109: c0001bcd     0 NOTYPE  GLOBAL DEFAULT    1 irq11
+   110: c0001b46     0 NOTYPE  GLOBAL DEFAULT    1 isr28
+   111: c00502e0    58 OBJECT  GLOBAL DEFAULT    3 sc_ascii
+   112: c00042ec    12 FUNC    GLOBAL DEFAULT    1 flush_tss
+   113: c0001a9e     0 NOTYPE  GLOBAL DEFAULT    1 isr8
+   114: c00025b5   147 FUNC    GLOBAL DEFAULT    1 ide_polling
+   115: c0001b97     0 NOTYPE  GLOBAL DEFAULT    1 irq5
+   116: c0001032    55 FUNC    GLOBAL DEFAULT    1 identity_map_page_table
+   117: c0001afe     0 NOTYPE  GLOBAL DEFAULT    1 isr20
+   118: c0001aca     0 NOTYPE  GLOBAL DEFAULT    1 isr14
+   119: c00020cc    27 FUNC    GLOBAL DEFAULT    1 get_offset
+   120: c0001a8c     0 NOTYPE  GLOBAL DEFAULT    1 isr5
+   121: c0004740   128 OBJECT  GLOBAL DEFAULT    2 exception_messages
+   122: c0054040   104 OBJECT  GLOBAL DEFAULT    5 tss
+   123: c00016c8   351 FUNC    GLOBAL DEFAULT    1 write_tss
+   124: c00018a7   114 FUNC    GLOBAL DEFAULT    1 kernel_main
+   125: c0001827    13 FUNC    GLOBAL DEFAULT    1 set_kernel_stack
+   126: c00042f8    48 FUNC    GLOBAL DEFAULT    1 memory_copy
+   127: c0001919   139 FUNC    GLOBAL DEFAULT    1 user_input
+   128: c0001ba0     0 NOTYPE  GLOBAL DEFAULT    1 irq6
+   129: c00037ed    74 FUNC    GLOBAL DEFAULT    1 ATA_read_test
+   130: c0001b73     0 NOTYPE  GLOBAL DEFAULT    1 irq1
+   131: c0054be0 15360 OBJECT  GLOBAL DEFAULT    5 ATA_test_buffer
+   132: c0052000    10 OBJECT  GLOBAL DEFAULT    5 k_memory_map
+   133: c000126d   158 FUNC    GLOBAL DEFAULT    1 kmalloc_test
+   134: c0001834    52 FUNC    GLOBAL DEFAULT    1 setup_interrupt_handlers
+   135: c0001cb0    26 FUNC    GLOBAL DEFAULT    1 kprint
+   136: 00000000     0 NOTYPE  GLOBAL DEFAULT    6 _start
+   137: c000134d   286 FUNC    GLOBAL DEFAULT    1 setup_paging
+   138: c000146b   605 FUNC    GLOBAL DEFAULT    1 setup_gdt
+   139: c00040e9    27 FUNC    GLOBAL DEFAULT    1 port_long_in
+   140: c0001a74     0 NOTYPE  GLOBAL DEFAULT    1 isr1
+   141: c00032e6    12 FUNC    GLOBAL DEFAULT    1 ide_irq
+   142: c0001bbb     0 NOTYPE  GLOBAL DEFAULT    1 irq9
+   143: c0053000  4096 OBJECT  GLOBAL DEFAULT    5 kernel_page_directory
+   144: c0003837  1330 FUNC    GLOBAL DEFAULT    1 isr_install
+   145: c0001b34     0 NOTYPE  GLOBAL DEFAULT    1 isr26
+   146: c0001ab5     0 NOTYPE  GLOBAL DEFAULT    1 isr11
+   147: c000118a    15 FUNC    GLOBAL DEFAULT    1 phys_to_kernel_addr
+   148: c0004640   232 OBJECT  GLOBAL DEFAULT    2 sc_name
+   149: c000405b    27 FUNC    GLOBAL DEFAULT    1 irq_install
+   150: c0001d54    71 FUNC    GLOBAL DEFAULT    1 kprint_backspace
+   151: c0001335    24 FUNC    GLOBAL DEFAULT    1 enter_ring3
+   152: c0001069    13 FUNC    GLOBAL DEFAULT    1 strip_vm_flags
+   153: c0004355   150 FUNC    GLOBAL DEFAULT    1 int_to_ascii
+   154: c0004328    45 FUNC    GLOBAL DEFAULT    1 memory_set
+   155: c00021f4    22 FUNC    GLOBAL DEFAULT    1 printk
+   156: c00593e8     4 OBJECT  GLOBAL DEFAULT    5 tick
+   157: c0001bdf     0 NOTYPE  GLOBAL DEFAULT    1 irq13
+   158: c0001abc     0 NOTYPE  GLOBAL DEFAULT    1 isr12
+   159: c0001a6e     0 NOTYPE  GLOBAL DEFAULT    1 isr0
+   160: c0001b7c     0 NOTYPE  GLOBAL DEFAULT    1 irq2
+   161: c0004076    27 FUNC    GLOBAL DEFAULT    1 port_byte_in
+   162: c0001d0f    69 FUNC    GLOBAL DEFAULT    1 kprint_int
+   163: c00019a4   117 FUNC    GLOBAL DEFAULT    1 kernel_exit
+   164: c00040cb    30 FUNC    GLOBAL DEFAULT    1 port_word_out
+   165: c0003d69   622 FUNC    GLOBAL DEFAULT    1 isr_handler
+   166: c0001b22     0 NOTYPE  GLOBAL DEFAULT    1 isr24
+   167: c0001ada     0 NOTYPE  GLOBAL DEFAULT    1 isr16
+   168: c00045a9    95 FUNC    GLOBAL DEFAULT    1 strcmp
+   169: c00587e0  2048 OBJECT  GLOBAL DEFAULT    5 idt
+   170: c0001a80     0 NOTYPE  GLOBAL DEFAULT    1 isr3
+   171: c0001d9b    81 FUNC    GLOBAL DEFAULT    1 kprint_at_col
+   172: c0054b60    16 OBJECT  GLOBAL DEFAULT    5 channels
+   173: c0004091    28 FUNC    GLOBAL DEFAULT    1 port_byte_out
+   174: c0058fe0  1024 OBJECT  GLOBAL DEFAULT    5 interrupt_handlers
+   175: c00032f2   623 FUNC    GLOBAL DEFAULT    1 ide_atapi_read
+   176: c0001a92     0 NOTYPE  GLOBAL DEFAULT    1 isr6
+   177: c0001199    11 FUNC    GLOBAL DEFAULT    1 flush_tlb
+   178: c0001ba9     0 NOTYPE  GLOBAL DEFAULT    1 irq7
+   179: c0001868    63 FUNC    GLOBAL DEFAULT    1 init_filesystem
+   180: c0003ff3   104 FUNC    GLOBAL DEFAULT    1 irq_handler
+   181: c0002d88  1352 FUNC    GLOBAL DEFAULT    1 ide_ata_access
+   182: c0001aec     0 NOTYPE  GLOBAL DEFAULT    1 isr18
+   183: c0001f9c    96 FUNC    GLOBAL DEFAULT    1 get_cursor_offset
+   184: c0001b6a     0 NOTYPE  GLOBAL DEFAULT    1 irq0
+   185: c00040ad    30 FUNC    GLOBAL DEFAULT    1 port_word_in
+   186: c0001aae     0 NOTYPE  GLOBAL DEFAULT    1 isr10
+   187: c00041a2    82 FUNC    GLOBAL DEFAULT    1 set_idt_gate
+   188: c00011b0   132 FUNC    GLOBAL DEFAULT    1 kmalloc
+   189: c000454e    55 FUNC    GLOBAL DEFAULT    1 append
+   190: c00540c0   104 OBJECT  GLOBAL DEFAULT    5 __packed
+   191: c0001000    50 FUNC    GLOBAL DEFAULT    1 clear_entries
+   192: c0001ae3     0 NOTYPE  GLOBAL DEFAULT    1 isr17
+   193: c0001a7a     0 NOTYPE  GLOBAL DEFAULT    1 isr2
+   194: c00020e7    27 FUNC    GLOBAL DEFAULT    1 get_offset_row
+   195: c0054b80    80 OBJECT  GLOBAL DEFAULT    5 package
+   196: c0001af5     0 NOTYPE  GLOBAL DEFAULT    1 isr19
+   197: c00043eb   220 FUNC    GLOBAL DEFAULT    1 hex_to_ascii
+   198: c0001b58     0 NOTYPE  GLOBAL DEFAULT    1 isr30
+   199: c0002102    46 FUNC    GLOBAL DEFAULT    1 get_offset_col
+   200: c0004529    37 FUNC    GLOBAL DEFAULT    1 strlen
+   201: c0004585    36 FUNC    GLOBAL DEFAULT    1 backspace
+   202: c0001312    35 FUNC    GLOBAL DEFAULT    1 jump_usermode
+   203: c0001bf1     0 NOTYPE  GLOBAL DEFAULT    1 irq15
+   204: c0001a98     0 NOTYPE  GLOBAL DEFAULT    1 isr7
+   205: c00593e0     6 OBJECT  GLOBAL DEFAULT    5 idt_reg
+   206: c0001b2b     0 NOTYPE  GLOBAL DEFAULT    1 isr25
+   207: c0002068   100 FUNC    GLOBAL DEFAULT    1 clear_screen
+   208: c00021da    26 FUNC    GLOBAL DEFAULT    1 init_keyboard
+   209: c0002338   313 FUNC    GLOBAL DEFAULT    1 ide_write
+   210: c0001b8e     0 NOTYPE  GLOBAL DEFAULT    1 irq4
+   211: c0001b85     0 NOTYPE  GLOBAL DEFAULT    1 irq3
+
+No version information found in this file.
