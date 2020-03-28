@@ -10,9 +10,9 @@ call enable_VM
 lgdt [gdt_descriptor]
 call reload_segments
 
-k_free_mem_addr equ 0x10000
+k_free_mem_addr equ 0x55000
 block_size equ 0x1000
-mov esp, 0xC0000000 + k_free_mem_addr + block_size - 16 ; set new esp to first kmalloc block
+mov esp, 0xC0000000 + k_free_mem_addr + block_size*2 - 16 ; set new esp to first kmalloc block
 
     [extern kernel_main] ; Define calling point. Must have same name as kernel.c 'main' function
     push dword 0x0

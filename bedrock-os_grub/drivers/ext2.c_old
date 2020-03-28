@@ -1,0 +1,172 @@
+#include "ext2.h"
+#include "storage.h"
+#include "screen.h"
+#include "../kernel/kmalloc.h"
+#include "../libc/mem.h"
+
+#define EXT2_SUPERBLOCK 2
+#define EXT2_SIGNATURE 0xef53
+#define ROOT_INODE 2
+
+struct fs_info {
+    uint32_t sectors_per_block;
+    uint32_t inodes_per_group;
+    uint32_t block_size;
+
+    uint32_t block_count;
+    uint32_t inode_count;
+    uint16_t signature;
+
+    uint32_t majorversion;
+    uint16_t inode_size;
+};
+
+struct block_group_info {
+    uint16_t directory_count;
+    uint32_t block_of_inode_table;
+};
+
+struct inode_info {
+    uint16_t type;
+};
+
+struct fs_info parse_supernode(uint8_t* supernode) {
+
+    struct fs_info info;
+
+    info.inodes_per_group = *((uint32_t*)&supernode[40]);
+    info.block_size = 1024 << *((uint32_t*)&supernode[24]);
+    info.sectors_per_block = info.block_size / 512;
+
+    info.block_count = *((uint32_t*)&supernode[4]);
+    info.inode_count = *((uint32_t*)&supernode[0]);
+    info.signature = *((uint16_t*)&supernode[56]);
+
+    info.majorversion = *((uint32_t*)&supernode[76]);
+
+    if (info.majorversion < 1) {
+	info.inode_size = 128;
+    } else {
+	info.inode_size = *((uint16_t*)&supernode[88]);
+    }
+
+    return info;
+}
+
+struct block_group_info parse_block_group(uint8_t* block_group) {
+    struct block_group_info info;
+
+    info.directory_count = *((uint16_t*)&block_group[16]);
+    info.block_of_inode_table = *((uint32_t*)&block_group[8]);
+
+    return info;
+}
+
+struct inode_info parse_inode(uint8_t* inode) {
+    struct inode_info info;
+
+    info.type = *((uint16_t*)&inode[0]);
+
+    return info;
+}
+
+void ext2_read_block(struct device_info device, struct fs_info fs, int block, uint8_t* buffer)
+{
+    read_sectors(device, block*fs.sectors_per_block, fs.sectors_per_block, buffer);
+}
+
+/* get block group of inode */
+int get_inode_block_group(struct fs_info fs, int inode) {
+    return (inode - 1) / fs.inodes_per_group;
+}
+
+/* get index of inode inside the block group's table */
+int get_inode_group_index(struct fs_info fs, int inode) {
+    return (inode - 1) % fs.inodes_per_group;
+}
+
+int get_inode_containing_block(struct fs_info fs, int inode) {
+    int index = get_inode_group_index(fs, inode);
+    return (index * fs.inode_size) / fs.block_size;
+}
+
+void ext2_read_inode(struct device_info device, struct fs_info fs, int inode, uint8_t *buffer) {
+
+    uint32_t *BGDT_buffer = (uint32_t*)kmalloc(1);
+
+    // read Block Group Descriptor Table immeadiately following the supernode
+    read_sectors(device, EXT2_SUPERBLOCK + fs.sectors_per_block, fs.sectors_per_block, (uint8_t*)BGDT_buffer);
+
+    kprint("\\ reading inode: ");
+    kprint_int(inode);
+    int block_group = get_inode_block_group(fs, inode);
+
+    struct block_group_info bg = parse_block_group((uint8_t*)BGDT_buffer + block_group * 32);
+
+    int index_in_group = get_inode_group_index(fs, inode);
+
+    int absolute_block = get_inode_containing_block(fs, inode) + bg.block_of_inode_table;
+
+    kprint("\n    containing block: (absolute) ");
+    kprint_int(absolute_block);
+    kprint("\n    index in table: ");
+    kprint_int(index_in_group);
+    kprint("\n");
+
+    kfree((uint32_t*)BGDT_buffer,1);
+
+    uint32_t *block_buffer = (uint32_t*)kmalloc(1);
+
+    ext2_read_block(device, fs, absolute_block, (uint8_t*)block_buffer);
+    
+    uint32_t* inode_buffer = block_buffer + index_in_group * fs.inode_size;
+    memory_copy((uint8_t*)inode_buffer, (uint8_t*)buffer, fs.inode_size);
+
+    kfree((uint32_t*)block_buffer,1);
+}
+
+char supernode_buffer[512*4];
+char block_group_buffer[512*4];
+char inode_buffer[512*4];
+
+void ext2_init(struct device_info device) {
+
+    kprint("\\ initializing ext2\n");
+    kprint("\\ loading superblock\n");
+
+    // read superblock starting at sector 2 taking up two sectors
+    read_sectors(device, EXT2_SUPERBLOCK, 2, supernode_buffer);
+
+    struct fs_info fs = parse_supernode(supernode_buffer);
+
+    if (fs.signature != 0xef53) {
+	kprint("\\ error: invalid ext2 signature\n");
+	return;
+    } else {kprint("\\ valid ext2 signature\n");}
+
+    /* print info */
+
+    kprint("\\ major version: ");
+    kprint_int(fs.majorversion);
+    kprint("\n");
+
+    kprint("\\ number of inodes: ");
+    kprint_int(fs.inode_count);
+    kprint("\n");
+
+    kprint("\\ number of blocks: ");
+    kprint_int(fs.block_count);
+    kprint("\n");
+
+    kprint("\\ block size: ");
+    kprint_int(fs.block_size);
+    kprint(" bytes\n");
+
+    ext2_read_inode(device, fs, 5, inode_buffer);
+
+    struct inode_info inode = parse_inode(inode_buffer);
+    kprint("inode type: ");
+    kprint_hex(inode.type);
+    kprint("\n");
+
+}

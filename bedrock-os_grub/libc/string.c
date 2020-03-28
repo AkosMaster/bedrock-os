@@ -75,3 +75,20 @@ int strcmp(char s1[], char s2[]) {
     }
     return s1[i] - s2[i];
 }
+
+int strsplit(char* str, char delim)
+{
+	int n = 0;
+	uint32_t i = 0;
+	while(str[i])
+	{
+		if(str[i] == delim)
+		{
+			str[i] = 0;
+			n++;
+		}
+		i++;
+	}
+	n++;
+	return n;
+}
